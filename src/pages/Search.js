@@ -1,14 +1,18 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import Carregando from './Carregando';
 import Header from '../components/Header';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
 class Search extends React.Component {
   state = {
     inputArtist: '',
     disabled: true,
     loading: false,
-    redirect: false,
+    resultArtist: '',
+    // redirect: false,
+    array: [],
   };
 
   onButtonChange = () => {
@@ -28,7 +32,7 @@ class Search extends React.Component {
       inputArtist: '',
       disabled: true,
       loading: false,
-      redirect: true,
+      // redirect: true,
     });
   }
 
@@ -36,36 +40,60 @@ class Search extends React.Component {
     event.preventDefault();
     const { inputArtist } = this.state;
     this.setState({ loading: true });
-    await createUser({ name: inputArtist });
+    const artist = await searchAlbumsAPI(inputArtist);
+    this.setState({ array: artist, resultArtist: inputArtist });
     this.clearInput();
   }
 
   render() {
-    const { inputArtist, disabled, loading, redirect } = this.state;
+    const { inputArtist, disabled, loading, array, resultArtist } = this.state;
     return (
       <div>
         <Header />
         <div data-testid="page-search">
-          <form>
-            <input
-              type="text"
-              data-testid="search-artist-input"
-              placeholder="Nome do Artista/Banda"
-              value={ inputArtist }
-              id="inputArtist"
-              onChange={ this.onInputChange }
-            />
-            <button
-              type="submit"
-              data-testid="search-artist-button"
-              disabled={ disabled }
-              onClick={ this.onButtonClick }
-            >
-              Pesquisar
-            </button>
-          </form>
-          {loading === true && <Carregando />}
-          {redirect === true && <Redirect to="/search" />}
+          {loading === true ? <Carregando /> : (
+            <>
+              <form>
+                <input
+                  type="text"
+                  data-testid="search-artist-input"
+                  placeholder="Nome do Artista/Banda"
+                  value={ inputArtist }
+                  id="inputArtist"
+                  onChange={ this.onInputChange }
+                />
+                <button
+                  type="submit"
+                  data-testid="search-artist-button"
+                  disabled={ disabled }
+                  onClick={ this.onButtonClick }
+                >
+                  Pesquisar
+                </button>
+              </form>
+              <main>
+                {`Resultado de álbuns de: ${resultArtist}`}
+                <br />
+                {array.length > 0 ? (
+                  <div>
+                    {array.map((artist) => (
+                      <Link
+                        data-testid={ `link-to-album-${artist.collectionId}` }
+                        key={ `${artist.collectionId}` }
+                        to={ `/album/${artist.collectionId}` }
+                      >
+                        { `${artist.collectionName}`}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <p>Nenhum álbum foi encontrado</p>
+                )}
+              </main>
+            </>
+          )}
+          {/* { Redirecionar quando clicar no card
+          {redirect === true && <Redirect to="../album/:id" />}} */}
         </div>
       </div>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Redirect } from 'react-router-dom';
 import Carregando from './Carregando';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
@@ -11,7 +10,6 @@ class Search extends React.Component {
     disabled: true,
     loading: false,
     resultArtist: '',
-    // redirect: false,
     array: [],
   };
 
@@ -32,7 +30,6 @@ class Search extends React.Component {
       inputArtist: '',
       disabled: true,
       loading: false,
-      // redirect: true,
     });
   }
 
@@ -75,25 +72,25 @@ class Search extends React.Component {
                 {`Resultado de álbuns de: ${resultArtist}`}
                 <br />
                 {array.length > 0 ? (
-                  <div>
+                  <ol>
                     {array.map((artist) => (
-                      <Link
-                        data-testid={ `link-to-album-${artist.collectionId}` }
-                        key={ `${artist.collectionId}` }
-                        to={ `/album/${artist.collectionId}` }
-                      >
-                        { `${artist.collectionName}`}
-                      </Link>
+                      <li key={ `${artist.collectionId}` }>
+                        <Link
+                          data-testid={ `link-to-album-${artist.collectionId}` }
+                          key={ `${artist.collectionId}` }
+                          to={ `/album/${artist.collectionId}` }
+                        >
+                          { `${artist.collectionName}`}
+                        </Link>
+                      </li>
                     ))}
-                  </div>
+                  </ol>
                 ) : (
-                  <p>Nenhum álbum foi encontrado</p>
+                  <h2>Nenhum álbum foi encontrado</h2>
                 )}
               </main>
             </>
           )}
-          {/* { Redirecionar quando clicar no card
-          {redirect === true && <Redirect to="../album/:id" />}} */}
         </div>
       </div>
     );

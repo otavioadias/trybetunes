@@ -32,7 +32,9 @@ class Album extends React.Component {
             { `${informationsAlbum.artistName}`}
           </h3>
         </ol>
-        <MusicCard album={ musicsAlbum } />
+        <MusicCard
+          album={ musicsAlbum }
+        />
       </div>
     );
   }

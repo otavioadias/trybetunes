@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   state = {
     informationsAlbum: {},
     musicsAlbum: [],
+    // favorites: [],
   }
 
   async componentDidMount() {
@@ -17,6 +19,20 @@ class Album extends React.Component {
     const musics = album.slice(1, album.length);
     this.setState({ musicsAlbum: musics });
     this.setState({ informationsAlbum: informations });
+    this.songsFavorites();
+    // this.verify(musics.trackId);
+    // console.log(this.verify(musics.trackId));
+  }
+
+  songsFavorites = async () => {
+    // const { musicsAlbum } = this.state;
+    const savedFavoriteSongs = await getFavoriteSongs();
+    // console.log(musicsAlbum);
+    console.log(savedFavoriteSongs);
+    // this.setState({ favorites: savedFavoriteSongs });
+    // musicsAlbum.forEach((music) => (
+    //   savedFavoriteSongs.some((musicAlbum) => (
+    //     ((musicAlbum === music.trackId) && this.setState({ checked: true }))))));
   }
 
   render() {
@@ -32,9 +48,13 @@ class Album extends React.Component {
             { `${informationsAlbum.artistName}`}
           </h3>
         </ol>
-        <MusicCard
-          album={ musicsAlbum }
-        />
+        {musicsAlbum.map((music) => (
+          <MusicCard
+            key={ music.TrackId }
+            music={ music }
+            // checked={ checked }
+          />
+        ))}
       </div>
     );
   }

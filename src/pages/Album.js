@@ -10,6 +10,7 @@ class Album extends React.Component {
     informationsAlbum: {},
     musicsAlbum: [],
     // favorites: [],
+    checked: false,
   }
 
   async componentDidMount() {
@@ -19,24 +20,12 @@ class Album extends React.Component {
     const musics = album.slice(1, album.length);
     this.setState({ musicsAlbum: musics });
     this.setState({ informationsAlbum: informations });
-    this.songsFavorites();
-    // this.verify(musics.trackId);
-    // console.log(this.verify(musics.trackId));
-  }
-
-  songsFavorites = async () => {
-    // const { musicsAlbum } = this.state;
-    const savedFavoriteSongs = await getFavoriteSongs();
-    // console.log(musicsAlbum);
-    console.log(savedFavoriteSongs);
-    // this.setState({ favorites: savedFavoriteSongs });
-    // musicsAlbum.forEach((music) => (
-    //   savedFavoriteSongs.some((musicAlbum) => (
-    //     ((musicAlbum === music.trackId) && this.setState({ checked: true }))))));
+    const newArray = await getFavoriteSongs();
+    this.setState({ checked: newArray.some((cur) => musics.includes(cur.trackId)) });
   }
 
   render() {
-    const { informationsAlbum, musicsAlbum } = this.state;
+    const { informationsAlbum, musicsAlbum, checked } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -50,9 +39,9 @@ class Album extends React.Component {
         </ol>
         {musicsAlbum.map((music) => (
           <MusicCard
-            key={ music.TrackId }
+            key={ music.previewUrl }
             music={ music }
-            // checked={ checked }
+            checkbox={ checked }
           />
         ))}
       </div>
@@ -61,7 +50,11 @@ class Album extends React.Component {
 }
 
 Album.propTypes = {
-  match: PropTypes.objectOf.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Album;

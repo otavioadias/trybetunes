@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Carregando from '../pages/Carregando';
 
 class MusicCard extends React.Component {
@@ -17,20 +17,25 @@ class MusicCard extends React.Component {
   }
 
   onInputChange = async (music) => {
-    const { arrayFavorites } = this.state;
-    const test = arrayFavorites.some((cur) => cur.trackId === music.trackId);
-    if (test) {
-      const newArray = arrayFavorites.filter((cur) => cur.trackId !== music.trackId);
-      this.setState({ arrayFavorites: newArray, checked: false });
-    } else {
-      this.setState((previousState) => (
-        { arrayFavorites: [...previousState.arrayFavorites, music] }
-      ));
-      this.setState({ checked: true });
+    const { arrayFavorites, checked } = this.state;
+
+    if (checked === false) {
+      this.setState({ checked: true, loading: true });
+      await addSong(music);
+      this.setState({ loading: false });
     }
-    this.setState({ loading: true });
-    await addSong(music);
+
+    this.setState({ checked: false, loading: true });
+    await removeSong(music);
     this.setState({ loading: false });
+    const arrayMusicsStorage = await getFavoriteSongs();
+
+    const test = await arrayMusicsStorage.some((cur) => cur.trackId === music.trackId);
+    if (test === false) {
+      return this.setState({ arrayFavorites: [...arrayMusicsStorage, music] });
+    }
+    const newArray = arrayFavorites.filter((cur) => cur.trackId !== music.trackId);
+    this.setState({ arrayFavorites: newArray });
   }
 
   verify = (trackId) => {
@@ -43,37 +48,43 @@ class MusicCard extends React.Component {
     const { loading, checked } = this.state;
     return (
       <div>
-        {loading === true && <Carregando />}
-        <ul>
-          <li key={ `${music.collectionId}` }>
-            { `${music.trackName}`}
-            {
-              <audio data-testid="audio-component" src={ music.previewUrl } controls>
-                <track kind="captions" />
-                O seu navegador não suporta o elemento
-                <code>audio</code>
-              </audio>
-            }
-            <label htmlFor="favorite">
-              <input
-                type="checkbox"
-                id="favorite"
-                value={ music.trackId }
-                data-testid={ `checkbox-music-${music.trackId}` }
-                onChange={ () => this.onInputChange(music) }
-                checked={ checked }
-              />
-              Favorita
-            </label>
-          </li>
-        </ul>
+        {loading === true ? <Carregando />
+          : (
+            <ul>
+              <li key={ `${music.collectionId}` }>
+                { `${music.trackName}`}
+                {
+                  <audio data-testid="audio-component" src={ music.previewUrl } controls>
+                    <track kind="captions" />
+                    O seu navegador não suporta o elemento
+                    <code>audio</code>
+                  </audio>
+                }
+                <label htmlFor="favorite">
+                  <input
+                    type="checkbox"
+                    id="favorite"
+                    value={ music.trackId }
+                    data-testid={ `checkbox-music-${music.trackId}` }
+                    onChange={ () => this.onInputChange(music) }
+                    checked={ checked }
+                  />
+                  Favorita
+                </label>
+              </li>
+            </ul>)}
       </div>
     );
   }
 }
 
 MusicCard.propTypes = {
-  music: PropTypes.arrayOf(PropTypes.object).isRequired,
+  music: PropTypes.shape({
+    trackId: PropTypes.number,
+    collectionId: PropTypes.number,
+    trackName: PropTypes.string,
+    previewUrl: PropTypes.string,
+  }).isRequired,
 };
 
 export default MusicCard;

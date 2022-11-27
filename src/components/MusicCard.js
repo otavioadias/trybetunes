@@ -23,19 +23,15 @@ class MusicCard extends React.Component {
       this.setState({ checked: true, loading: true });
       await addSong(music);
       this.setState({ loading: false });
+      const newArray = arrayFavorites.filter((cur) => cur.trackId !== music.trackId);
+      return this.setState({ arrayFavorites: newArray });
     }
 
     this.setState({ checked: false, loading: true });
     await removeSong(music);
     this.setState({ loading: false });
     const arrayMusicsStorage = await getFavoriteSongs();
-
-    const test = await arrayMusicsStorage.some((cur) => cur.trackId === music.trackId);
-    if (test === false) {
-      return this.setState({ arrayFavorites: [...arrayMusicsStorage, music] });
-    }
-    const newArray = arrayFavorites.filter((cur) => cur.trackId !== music.trackId);
-    this.setState({ arrayFavorites: newArray });
+    return this.setState({ arrayFavorites: [...arrayMusicsStorage, music] });
   }
 
   verify = (trackId) => {

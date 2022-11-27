@@ -16,7 +16,12 @@ class Profile extends React.Component {
 
   async componentDidMount() {
     const dados = await getUser();
-    this.setState({ name: dados.name });
+    this.setState({
+      name: dados.name,
+      img: dados.image,
+      description: dados.description,
+      email: dados.email,
+    });
     this.setState({ loading: false });
   }
 

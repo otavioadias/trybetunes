@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { getUser, updateUser } from '../services/userAPI';
@@ -15,9 +16,18 @@ class ProfileEdit extends React.Component {
     save: false,
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getInformation();
+  }
+
+  getInformation = async () => {
     const dados = await getUser();
-    this.setState({ name: dados.name });
+    this.setState({
+      name: dados.name,
+      image: dados.image,
+      description: dados.description,
+      email: dados.email,
+    });
     this.setState({ loading: false });
   }
 
@@ -32,10 +42,12 @@ class ProfileEdit extends React.Component {
     } this.setState({ disabled: false });
   }
 
-  onSave = async () => {
+  onSave = async (event) => {
+    event.preventDefault();
     const { name, description, email, image } = this.state;
-    this.setState({ save: true });
-    await updateUser({ name, email, description, image });
+    const { history } = this.props;
+    await updateUser({ name, email, image, description });
+    history.push('/profile');
   }
 
   render() {
@@ -82,7 +94,7 @@ class ProfileEdit extends React.Component {
                   onChange={ this.onInputChange }
                 />
               </label>
-              <label htmlFor="description">
+              <label htmlFor="image">
                 Imagem:
                 <input
                   type="text"
@@ -99,24 +111,30 @@ class ProfileEdit extends React.Component {
                 onChange={ this.onInputChange }
                 onClick={ this.onSave }
               >
-                Salvar
+                Editar perfil
               </button>
-              { save === true && (
-                <Redirect
-                  to="/profile"
-                  save={ save }
-                  nameEdit={ name }
-                  emailEdit={ email }
-                  descriptionEdit={ description }
-                  imageEdit={ image }
-                />
-              )}
             </forms>
           </main>
+        )}
+        { save === true && (
+          <Redirect
+            to="/profile"
+            save={ save }
+            nameEdit={ name }
+            emailEdit={ email }
+            descriptionEdit={ description }
+            imageEdit={ image }
+          />
         )}
       </div>
     );
   }
 }
+
+ProfileEdit.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default ProfileEdit;

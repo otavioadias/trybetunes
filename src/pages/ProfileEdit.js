@@ -16,7 +16,8 @@ class ProfileEdit extends React.Component {
   }
 
   async componentDidMount() {
-    await getUser();
+    const dados = await getUser();
+    this.setState({ name: dados.name });
     this.setState({ loading: false });
   }
 

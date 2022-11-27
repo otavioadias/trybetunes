@@ -31,41 +31,19 @@ class Profile extends React.Component {
           <Carregando />
         ) : (
           <main>
-            { save }
-            : (
             <img
               data-testid="profile-image"
-              src={ imageEdit }
+              src={ !save || save === false ? img : imageEdit }
               alt={ name }
             />
-            )
-            ?
-            <img
-              data-testid="profile-image"
-              src={ img }
-              alt={ name }
-            />
-
             <section data-testid="user-name">
-              {save}
-              :
-              { nameEdit }
-              ?
-              { name }
+              { !save || save === false ? name : nameEdit }
             </section>
             <section data-testid="user-email">
-              {save}
-              :
-              { emailEdit }
-              ?
-              { email }
+              { !save || save === false ? email : emailEdit }
             </section>
             <section data-testid="user-description">
-              {save}
-              :
-              { descriptionEdit }
-              ?
-              { description }
+              { !save || save === false ? description : descriptionEdit }
             </section>
             <Link to="/profile/edit">Editar perfil</Link>
           </main>

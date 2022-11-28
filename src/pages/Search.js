@@ -45,12 +45,21 @@ class Search extends React.Component {
   render() {
     const { inputArtist, disabled, loading, array, resultArtist } = this.state;
     return (
-      <div>
+      <div
+        className="min-h-screen
+      bg-black min-w-full text-white"
+      >
         <Header />
-        <div data-testid="page-search">
+        <div
+          data-testid="page-search"
+          className="flex flex-col items-center
+         bg-black min-w-full text-white"
+        >
           {loading === true ? <Carregando /> : (
             <>
-              <form>
+              <form
+                className="flex gap-5 m-10"
+              >
                 <input
                   type="text"
                   data-testid="search-artist-input"
@@ -58,28 +67,44 @@ class Search extends React.Component {
                   value={ inputArtist }
                   id="inputArtist"
                   onChange={ this.onInputChange }
+                  className="bg-white
+              text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl"
                 />
                 <button
                   type="submit"
                   data-testid="search-artist-button"
                   disabled={ disabled }
                   onClick={ this.onButtonClick }
+                  className="bg-white
+              text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
+              hover:shadow-zinc-700/80 cursor-pointer"
                 >
                   Pesquisar
                 </button>
               </form>
-              <main>
+              <main
+                className="min-w-full flex flex-grow flex-wrap
+                justify-center"
+              >
                 {`Resultado de álbuns de: ${resultArtist}`}
-                <br />
                 {array.length > 0 ? (
-                  <ol>
+                  <ol
+                    className="min-w-full flex flex-grow flex-wrap
+                    gap-20 justify-center m-20"
+                  >
                     {array.map((artist) => (
                       <li key={ `${artist.collectionId}` }>
                         <Link
                           data-testid={ `link-to-album-${artist.collectionId}` }
                           key={ `${artist.collectionId}` }
                           to={ `/album/${artist.collectionId}` }
+                          className="text-white flex flex-col w-40 h-40
+                          hover:shadow-zinc-100/80 cursor-pointer"
                         >
+                          { <img
+                            src={ `${artist.artworkUrl100}` }
+                            alt={ `${artist.name}` }
+                          /> }
                           { `${artist.collectionName}`}
                         </Link>
                       </li>

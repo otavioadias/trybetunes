@@ -12,6 +12,7 @@ class MusicCard extends React.Component {
 
   async componentDidMount() {
     const { music } = this.props;
+    console.log(music);
     const newArray = await getFavoriteSongs();
     this.setState({ checked: newArray.some((cur) => cur.trackId === music.trackId) });
   }
@@ -43,11 +44,24 @@ class MusicCard extends React.Component {
     const { music } = this.props;
     const { loading, checked } = this.state;
     return (
-      <div>
+      <div
+        className="bg-black min-w-full text-white"
+      >
         {loading === true ? <Carregando />
           : (
-            <ul>
-              <li key={ `${music.collectionId}` }>
+            <ul
+              className="min-w-full flex flex-grow flex-wrap
+              gap-5 justify-center m-20"
+            >
+              <img
+                src={ `${music.artworkUrl100}` }
+                alt={ `${music.trackName}` }
+                width="110px"
+              />
+              <li
+                className="flex flex-col items-center gap-2"
+                key={ `${music.collectionId}` }
+              >
                 { `${music.trackName}`}
                 {
                   <audio data-testid="audio-component" src={ music.previewUrl } controls>
@@ -65,6 +79,7 @@ class MusicCard extends React.Component {
                     onChange={ () => this.onInputChange(music) }
                     checked={ checked }
                   />
+                  {' '}
                   Favorita
                 </label>
               </li>
@@ -76,6 +91,7 @@ class MusicCard extends React.Component {
 
 MusicCard.propTypes = {
   music: PropTypes.shape({
+    artworkUrl100: PropTypes.string,
     trackId: PropTypes.number,
     collectionId: PropTypes.number,
     trackName: PropTypes.string,

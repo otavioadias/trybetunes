@@ -29,17 +29,24 @@ class Profile extends React.Component {
     const { name, loading, email, img, description } = this.state;
     const { save, nameEdit, emailEdit, imageEdit, descriptionEdit } = this.props;
     return (
-      <div>
+      <div
+        className="bg-black min-w-full text-white"
+      >
         <Header />
-        <div data-testid="page-profile">Profile</div>
+        <div className="p-7" data-testid="page-profile">Profile</div>
         {loading === true ? (
           <Carregando />
         ) : (
-          <main>
+          <main
+            className="flex flex-col items-center gap-10
+            bg-black min-w-full min-h-screen text-white"
+          >
             <img
               data-testid="profile-image"
               src={ !save || save === false ? img : imageEdit }
               alt={ name }
+              width="200"
+              className="rounded-2xl"
             />
             <section data-testid="user-name">
               { !save || save === false ? name : nameEdit }
@@ -50,7 +57,15 @@ class Profile extends React.Component {
             <section data-testid="user-description">
               { !save || save === false ? description : descriptionEdit }
             </section>
-            <Link to="/profile/edit">Editar perfil</Link>
+            <Link
+              to="/profile/edit"
+              className="bg-white
+            text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
+            hover:shadow-zinc-700/80 cursor-pointer"
+            >
+              Editar perfil
+
+            </Link>
           </main>
         )}
       </div>

@@ -27,23 +27,36 @@ class Album extends React.Component {
   render() {
     const { informationsAlbum, musicsAlbum, checked } = this.state;
     return (
-      <div data-testid="page-album">
+      <div
+        data-testid="page-album"
+        className="min-h-screen
+        bg-black min-w-full text-white"
+      >
         <Header />
-        <ol>
-          <h2 data-testid="album-name">
-            { `${informationsAlbum.collectionName}`}
-          </h2>
-          <h3 data-testid="artist-name">
-            { `${informationsAlbum.artistName}`}
-          </h3>
-        </ol>
-        {musicsAlbum.map((music) => (
-          <MusicCard
-            key={ music.previewUrl }
-            music={ music }
-            checkbox={ checked }
-          />
-        ))}
+        <div className="flex justify-evenly">
+          <ol className="mt-20">
+            <img
+              src={ `${informationsAlbum.artworkUrl100}` }
+              alt={ `${informationsAlbum.name}` }
+              width="200px"
+            />
+            <h2 data-testid="album-name">
+              { `${informationsAlbum.collectionName}`}
+            </h2>
+            <h3 data-testid="artist-name">
+              { `${informationsAlbum.artistName}`}
+            </h3>
+          </ol>
+          <ol>
+            {musicsAlbum.map((music) => (
+              <MusicCard
+                key={ music.previewUrl }
+                music={ music }
+                checkbox={ checked }
+              />
+            ))}
+          </ol>
+        </div>
       </div>
     );
   }

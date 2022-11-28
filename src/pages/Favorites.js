@@ -36,12 +36,15 @@ class Favorites extends React.Component {
   render() {
     const { checked, favorites, loading } = this.state;
     return (
-      <div>
+      <div className="bg-black min-w-full text-white">
         <Header />
+        <h1 className="min-w-full px-7 pt-10">Favorites</h1>
         { loading === true ? <Carregando />
           : (
-            <div data-testid="page-favorites">
-              Favorites
+            <div
+              data-testid="page-favorites"
+              className="bg-black min-w-full p-20 text-white text-center"
+            >
               {favorites.map((music) => (
                 <MusicCard
                   key={ music.previewUrl }

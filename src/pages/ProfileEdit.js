@@ -53,14 +53,19 @@ class ProfileEdit extends React.Component {
   render() {
     const { loading, name, description, email, image, disabled, save } = this.state;
     return (
-      <div>
+      <div className="bg-black min-w-full text-white">
         <Header />
-        <div data-testid="page-profile-edit">Profile Edit</div>
+        <div className="p-7" data-testid="page-profile-edit">Profile Edit</div>
         {loading === true ? (
           <Carregando />
         ) : (
-          <main>
-            <forms>
+          <main
+            className="flex justify-center bg-black min-w-full min-h-screen text-white"
+          >
+            <forms
+              className="flex flex-col items-end gap-10
+              bg-black text-white"
+            >
               <label htmlFor="name">
                 Nome:
                 <input
@@ -70,6 +75,8 @@ class ProfileEdit extends React.Component {
                   placeholder="Insira seu nome"
                   value={ name }
                   onChange={ this.onInputChange }
+                  className="bg-white text-black shadow-lg
+                  max-h-10 py-2 px-4 rounded-2xl mx-2"
                 />
               </label>
               <label htmlFor="email">
@@ -81,6 +88,8 @@ class ProfileEdit extends React.Component {
                   placeholder="Insira seu email"
                   value={ email }
                   onChange={ this.onInputChange }
+                  className="bg-white mx-2
+                text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl"
                 />
               </label>
               <label htmlFor="description">
@@ -92,6 +101,8 @@ class ProfileEdit extends React.Component {
                   placeholder="Insira sua descrição"
                   value={ description }
                   onChange={ this.onInputChange }
+                  className="bg-white mx-2
+                text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl"
                 />
               </label>
               <label htmlFor="image">
@@ -102,6 +113,8 @@ class ProfileEdit extends React.Component {
                   data-testid="edit-input-image"
                   value={ image }
                   onChange={ this.onInputChange }
+                  className="bg-white mx-2
+                text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl"
                 />
               </label>
               <button
@@ -110,6 +123,9 @@ class ProfileEdit extends React.Component {
                 disabled={ disabled }
                 onChange={ this.onInputChange }
                 onClick={ this.onSave }
+                className="bg-white
+              text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
+              hover:shadow-zinc-700/80 cursor-pointer"
               >
                 Editar perfil
               </button>

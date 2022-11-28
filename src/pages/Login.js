@@ -43,27 +43,45 @@ class Login extends React.Component {
   render() {
     const { inputUser, disabled, loading, redirect } = this.state;
     return (
-      <div data-testid="page-login">
-        <form>
-          <input
-            type="text"
-            data-testid="login-name-input"
-            placeholder="Nome"
-            value={ inputUser }
-            id="inputUser"
-            onChange={ this.onInputChange }
-          />
-          <button
-            type="submit"
-            data-testid="login-submit-button"
-            disabled={ disabled }
-            onClick={ this.onButtonClick }
+      <div
+        className="flex flex-col justify-center items-center
+        min-h-screen
+        bg-black text-white"
+      >
+        <div
+          data-testid="page-login"
+        >
+          <form
+            className="flex flex-col gap-10 p-20 text-center
+            rounded-2xl
+            shadow-zinc-700/80 shadow-2xl
+            bg-slate-50/5"
           >
-            Entrar
-          </button>
-        </form>
-        {loading === true && <Carregando />}
-        {redirect === true && <Redirect to="/search" />}
+            <h1 className="text-3xl mb-4">TrybeTunes</h1>
+            <input
+              type="text"
+              data-testid="login-name-input"
+              placeholder="Nome"
+              value={ inputUser }
+              id="inputUser"
+              onChange={ this.onInputChange }
+              className="w-full block rounded p-2 text-black"
+            />
+            <button
+              type="submit"
+              data-testid="login-submit-button"
+              disabled={ disabled }
+              onClick={ this.onButtonClick }
+              className="bg-white
+               text-black shadow-lg p-2 rounded
+               hover:shadow-zinc-700/80 cursor-pointer"
+            >
+              Entrar
+            </button>
+          </form>
+          {loading === true && <Carregando />}
+          {redirect === true && <Redirect to="/search" />}
+        </div>
       </div>
     );
   }

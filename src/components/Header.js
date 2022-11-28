@@ -29,7 +29,6 @@ class Header extends React.Component {
         ) : (
           <div className="flex gap-5 items-center">
             <img
-              data-testid="profile-image"
               src={ img }
               alt={ name }
               width="50"

@@ -46,7 +46,7 @@ class Login extends React.Component {
       <div
         className="flex flex-col justify-center items-center
         min-h-screen
-        bg-black text-white"
+        bg-gradient-to-r from-black to-slate-900 text-white"
       >
         <div
           data-testid="page-login"
@@ -54,10 +54,14 @@ class Login extends React.Component {
           <form
             className="flex flex-col gap-10 p-20 text-center
             rounded-2xl
-            shadow-zinc-700/80 shadow-2xl
-            bg-slate-50/5"
+            shadow-indigo-900/20 shadow-2xl
+            bg-slate-400/5"
           >
-            <h1 className="text-3xl mb-4">TrybeTunes</h1>
+            <img
+              src="https://cdn.discordapp.com/attachments/938669134890278937/1046768828060799067/20221128_093354_0000-removebg-preview.png"
+              alt="TrybeTunesLogo"
+              width="300"
+            />
             <input
               type="text"
               data-testid="login-name-input"
@@ -74,7 +78,7 @@ class Login extends React.Component {
               onClick={ this.onButtonClick }
               className="bg-white
                text-black shadow-lg p-2 rounded
-               hover:shadow-zinc-700/80 cursor-pointer"
+               hover:shadow-indigo-900/60 cursor-pointer"
             >
               Entrar
             </button>

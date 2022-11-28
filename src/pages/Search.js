@@ -77,7 +77,7 @@ class Search extends React.Component {
                   onClick={ this.onButtonClick }
                   className="bg-white
               text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
-              hover:shadow-zinc-700/80 cursor-pointer"
+              hover:shadow-indigo-900/60 cursor-pointer"
                 >
                   Pesquisar
                 </button>
@@ -111,7 +111,9 @@ class Search extends React.Component {
                     ))}
                   </ol>
                 ) : (
-                  <h2>Nenhum álbum foi encontrado</h2>
+                  <h2>
+                    Nenhum álbum foi encontrado
+                  </h2>
                 )}
               </main>
             </>

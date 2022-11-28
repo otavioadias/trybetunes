@@ -5,7 +5,7 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App className="bg-black min-w-full min-h-screen"/>
   </React.StrictMode>,
   document.getElementById('root'),
 );

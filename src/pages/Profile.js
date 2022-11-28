@@ -61,7 +61,7 @@ class Profile extends React.Component {
               to="/profile/edit"
               className="bg-white
             text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
-            hover:shadow-zinc-700/80 cursor-pointer"
+            hover:shadow-indigo-900/60 cursor-pointer"
             >
               Editar perfil
 

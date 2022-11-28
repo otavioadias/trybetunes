@@ -6,7 +6,7 @@ import Carregando from '../pages/Carregando';
 class Header extends React.Component {
   state = {
     name: '',
-    img: '',
+    img: 'https://pic.onlinewebfonts.com/svg/img_24787.png',
     loading: true,
   }
 
@@ -20,8 +20,8 @@ class Header extends React.Component {
     const { name, loading, img } = this.state;
     return (
       <header
-        className="flex flex-row-reverse gap-10 justify-around
-         bg-black min-w-full text-white"
+        className="flex flex-row-reverse gap-10 justify-around rounded-b-2xl
+        bg-gradient-to-r from-black to-slate-900 min-w-full text-white"
         data-testid="header-component"
       >
         {loading === true ? (
@@ -29,7 +29,7 @@ class Header extends React.Component {
         ) : (
           <div className="flex gap-5 items-center">
             <img
-              src={ img }
+              src={ !img ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png' : img }
               alt={ name }
               width="50"
               className="rounded-full"
@@ -39,7 +39,7 @@ class Header extends React.Component {
               to="/profile"
               className="bg-white
               text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
-              hover:shadow-zinc-700/80 cursor-pointer"
+              hover:shadow-indigo-900/60 cursor-pointer"
             >
               { name }
             </Link>
@@ -47,7 +47,7 @@ class Header extends React.Component {
               to="/"
               className="bg-white
               text-black shadow-lg max-h-10 py-2 px-4 rounded-2xl
-              hover:shadow-zinc-700/80 cursor-pointer"
+              hover:shadow-indigo-900/60 cursor-pointer"
             >
               Logout
             </Link>
